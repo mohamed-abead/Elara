@@ -1,23 +1,32 @@
 import { NextResponse } from 'next/server';
-import { readFile } from 'fs/promises';
-import { join } from 'path';
+
+const appleAppSiteAssociation =
+{
+  "applinks": {
+      "details": [
+           {
+             "appIDs": [ "JDQVB9SCWF.com.anonymous.elara-react-native" ],
+             "components": [
+               {
+                  "/": "/plaid/redirect/*",
+                  "comment": "Matches any URL with a path that starts with /plaid/redirect/."
+               },
+               {
+                  "/": "/banking/redirect/*",
+                  "comment": "Matches any URL with a path that starts with /banking/redirect/."
+               }
+             ]
+           }
+       ]
+   }
+};
 
 export async function GET() {
-  try {
-    const filePath = join(process.cwd(), 'public', '.well-known', 'apple-app-site-association');
-    const fileContent = await readFile(filePath, 'utf8');
-    
-    return new NextResponse(fileContent, {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=3600',
-      },
-    });
-  } catch (error) {
-    return new NextResponse(JSON.stringify({ error: 'File not found' }), {
-      status: 404,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+  return new NextResponse(JSON.stringify(appleAppSiteAssociation), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+      'Cache-Control': 'public, max-age=3600',
+    },
+  });
 }
