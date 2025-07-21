@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "JDQVB9SCWF.com.anonymous.elara-react-native",
+        "paths": [
+          "/plaid/redirect/*",
+          "/banking/redirect/*"
+        ]
+      }
+    ]
+  }
+}
