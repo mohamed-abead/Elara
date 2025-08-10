@@ -1,36 +1,125 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gold-Backed Bank Account Landing Page
 
-## Getting Started
+A premium, mobile-first landing page for a modern gold-backed bank account. Built with Next.js, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+## Features
+
+- **Ultra-minimal, premium design** inspired by Apple product pages
+- **Mobile-first responsive design** with generous whitespace
+- **Smooth scroll-triggered animations** with reduced motion support
+- **Delightful micro-interactions** and hover effects
+- **Accessibility-focused** with proper focus states and semantic HTML
+- **Email waitlist integration** with Google Forms
+- **SEO optimized** with proper meta tags and structured data
+
+## Design System
+
+### Color Palette
+
+- **Primary**: Black (#000000) and near-white (#ffffff)
+- **Accent**: Gold (#C5A572) for highlights and buttons
+- **Typography**: System fonts (San Francisco, Inter) for clean, premium feel
+
+### Sections
+
+1. **Hero** - Above the fold with compelling headline and CTA
+2. **Product Highlights** - Four key features with icons
+3. **How It Works** - Three-step process flow
+4. **Security & Transparency** - Trust-building content
+5. **Email Waitlist** - Google Form integration
+6. **FAQ** - Expandable questions and answers
+7. **Footer** - Legal links and company information
+
+## Setup
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Google Form Integration
 
-## Learn More
+The email waitlist form is configured to submit to a Google Form. To set this up:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Create a Google Form** with an email field
+2. **Get the form action URL** from the form's source code
+3. **Get the entry ID** for the email field
+4. **Update the form configuration** in `app/page.tsx`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```typescript
+// Replace these values in the handleEmailSubmit function:
+const formData = new FormData();
+formData.append("entry.123456789", email); // Replace with your actual entry ID
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+const response = await fetch(
+  "https://docs.google.com/forms/d/YOUR_FORM_ID/formResponse",
+  {
+    method: "POST",
+    body: formData,
+    mode: "no-cors",
+  }
+);
+```
 
-## Deploy on Vercel
+### Finding Your Google Form Details
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Form Action URL**: Right-click on your Google Form → "View Page Source" → Search for `action="`
+2. **Entry ID**: In the form source, find the input field for email and look for `name="entry.XXXXXXXXX"`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Customization
+
+### Colors
+
+Update the gold color palette in `tailwind.config.ts` and `app/globals.css`
+
+### Content
+
+Modify the content in `app/page.tsx` to match your brand and messaging
+
+### Animations
+
+Customize animations in `app/globals.css` and `tailwind.config.ts`
+
+## Performance
+
+- **Lazy loading** for heavy media
+- **Minimal JavaScript** with efficient animations
+- **Optimized images** and assets
+- **Semantic HTML** for better SEO
+
+## Accessibility
+
+- **Keyboard navigation** support
+- **Screen reader** friendly
+- **High contrast** design
+- **Reduced motion** support
+- **Focus indicators** for all interactive elements
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## License
+
+Private - All rights reserved

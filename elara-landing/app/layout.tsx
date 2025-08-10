@@ -2,28 +2,31 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+})
 
 export const metadata: Metadata = {
-  title: 'Elara - Smart Islamic Wealth Management Platform',
-  description: 'Elara helps you track wealth, calculate zakat, budget smartly, and invest wisely according to Islamic principles. Join thousands managing their wealth journey.',
-  keywords: 'Islamic finance, wealth management, zakat calculator, halal investments, financial planning',
+  title: 'Gold-Backed Bank Account | Modern Banking Anchored to Gold',
+  description: 'A modern bank account backed by physical gold. Spend in USD while your wealth is anchored to the stability of gold. Join the waitlist for transparent, secure banking.',
+  keywords: 'gold-backed banking, digital gold, secure banking, transparent pricing, modern banking',
   openGraph: {
-    title: 'Elara - Smart Islamic Wealth Management Platform',
-    description: 'Track wealth, calculate zakat, and invest wisely with Elara',
+    title: 'Gold-Backed Bank Account | Modern Banking Anchored to Gold',
+    description: 'A modern bank account backed by physical gold. Spend in USD while your wealth is anchored to the stability of gold.',
     images: ['/images/og-image.png'],
     type: 'website',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Elara - Smart Islamic Wealth Management Platform',
-    description: 'Track wealth, calculate zakat, and invest wisely with Elara',
+    title: 'Gold-Backed Bank Account | Modern Banking Anchored to Gold',
+    description: 'A modern bank account backed by physical gold. Spend in USD while your wealth is anchored to the stability of gold.',
     images: ['/images/og-image.png'],
   },
   robots: 'index, follow',
   viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#004d40',
+  themeColor: '#000000',
 }
 
 export default function RootLayout({
@@ -32,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className={inter.variable}>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   )
 }
