@@ -1,22 +1,21 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { Button } from "@/components/ui/button"
-import { Shield, CreditCard, Eye, DollarSign, CheckCircle, ChevronRight, Mail } from "lucide-react"
+import { Shield, CreditCard, Eye, DollarSign, CheckCircle, Mail } from "lucide-react"
 
 export default function LandingPage() {
   const [email, setEmail] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
-  const [activeFAQ, setActiveFAQ] = useState<number | null>(null)
   
   const heroRef = useRef<HTMLDivElement>(null)
   const featuresRef = useRef<HTMLDivElement>(null)
   const howItWorksRef = useRef<HTMLDivElement>(null)
   const securityRef = useRef<HTMLDivElement>(null)
   const waitlistRef = useRef<HTMLDivElement>(null)
-  const faqRef = useRef<HTMLDivElement>(null)
 
   // Intersection Observer for scroll animations
   useEffect(() => {
@@ -88,10 +87,6 @@ export default function LandingPage() {
       setIsLoading(false);
     }
   };
-
-  const toggleFAQ = (index: number) => {
-    setActiveFAQ(activeFAQ === index ? null : index)
-  }
 
   return (
     <div className="min-h-screen bg-white text-black">
@@ -171,9 +166,11 @@ export default function LandingPage() {
               <div className="relative max-w-md mx-auto">
                 {/* Card Image */}
                 <div className="relative animate-scale-in" style={{ animation: 'scaleIn 1.2s ease-out forwards' }}>
-                  <img 
+                  <Image 
                     src="/images/elara_card.png" 
                     alt="Elara Premium Card" 
+                    width={400}
+                    height={250}
                     className="w-full h-auto"
                   />
                 </div>
