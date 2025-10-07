@@ -140,8 +140,9 @@ export default function LandingPage() {
               <span className="text-[#C5A572]">Backed by Gold.</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed animate-slide-up">
-              Spend in your currency while your wealth is anchored to the stability of gold. 
-              Transparent, secure, and designed for the modern world.
+              Earn, receive, and deposit money in any currency. 
+              Back it with gold. 
+              Use it for everyday purchases. Your money, protected from inflation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up">
               <Button 
@@ -197,7 +198,7 @@ export default function LandingPage() {
               {
                 icon: DollarSign,
                 title: "Spend in local currency, anchored to gold",
-                description: "Use your account for everyday purchases (e.g. USD, EGP, GBP, etc.) while your wealth maintains its gold backing."
+                description: "Use your account for everyday purchases (e.g. USD, EGP, GBP, etc.) while your wealth maintains its value."
               },
               {
                 icon: Eye,
@@ -249,17 +250,17 @@ export default function LandingPage() {
                 {
                   step: "01",
                   title: "Join the waitlist",
-                  description: "Sign up to be among the first to experience gold-backed banking."
+                  description: "Be among the first to experience the future of gold-backed banking."
                 },
                 {
                   step: "02", 
-                  title: "Get your account",
-                  description: "Receive your account details and start funding it with your local currency."
+                  title: "Activate your account",
+                  description: "Get your account details and start funding it instantly."
                 },
                 {
                   step: "03",
                   title: "Spend and grow",
-                  description: "Use your account for daily transactions while your wealth grows with gold."
+                  description: "Use your account for everyday spending — while your wealth grows with gold."
                 }
               ].map((step, index) => (
                 <div key={index} className="text-center" style={{ animationDelay: `${index * 0.2}s` }}>
@@ -280,82 +281,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Security & Transparency */}
-      <section ref={securityRef} className="py-24 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="scroll-animate">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                  Security & Transparency
-                </h2>
-                <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                  Your gold is stored in secure, insured vaults with regular audits and complete transparency. 
-                  We believe you should know exactly where your wealth is and how it is protected.
-                </p>
-                
-                <div className="space-y-4">
-                  {[
-                    "Physical gold stored in insured vaults",
-                    "Regular third-party audits",
-                    "Real-time transparency dashboard",
-                    "Bank-level security encryption"
-                  ].map((item, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-[#C5A572] flex-shrink-0" />
-                      <span className="text-gray-700">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="scroll-animate vault-container">
-                {/* Animated Gold Vault */}
-                <div className="relative max-w-sm mx-auto">
-                  <div className="vault-door p-8 shadow-2xl">
-                    <div className="vault-glow"></div>
-                    <div className="relative z-10">
-                      <div className="text-center mb-6">
-                        <h3 className="text-white text-xl font-semibold mb-2">Secure Vault</h3>
-                        <p className="text-gray-400 text-sm">Your gold is protected here</p>
-                      </div>
-                      
-                      {/* Vault wheel */}
-                      <div className="flex justify-center mb-6">
-                        <div className="vault-wheel animate-vault-wheel">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-1 h-8 bg-yellow-400 rounded-full"></div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Vault door details */}
-                      <div className="space-y-3">
-                        <div className="h-1 bg-gray-600 rounded-full"></div>
-                        <div className="h-1 bg-gray-600 rounded-full w-3/4 mx-auto"></div>
-                        <div className="h-1 bg-gray-600 rounded-full w-1/2 mx-auto"></div>
-                      </div>
-                      
-                      {/* Security indicators */}
-                      <div className="flex justify-between items-center mt-6 text-xs text-gray-400">
-                        <span>🔒 Encrypted</span>
-                        <span>📊 Audited</span>
-                        <span>🛡️ Insured</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Floating gold particles */}
-                  <div className="absolute -top-4 -right-4 w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
-                  <div className="absolute -bottom-2 -left-2 w-2 h-2 bg-yellow-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
-                  <div className="absolute top-1/2 -right-6 w-1 h-1 bg-yellow-400 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      
       {/* Email Waitlist */}
       <section ref={waitlistRef} className="py-24 bg-white">
         <div className="container mx-auto px-4">
@@ -413,105 +339,15 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
+      
       {/* Footer */}
-      <footer className="bg-black text-white py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {/* Company Info */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">E</span>
-                </div>
-                <span className="font-semibold text-xl">Elara</span>
-              </div>
-              <p className="text-gray-400 text-sm">
-                Modern banking anchored to the stability of gold.
-              </p>
-            </div>
-
-            {/* Product */}
-            <div>
-              <h3 className="font-semibold text-lg mb-4">Product</h3>
-              <ul className="space-y-3">
-                <li>
-                  <button 
-                    onClick={() => scrollToSection(featuresRef)}
-                    className="text-gray-400 hover:text-white text-sm transition-colors"
-                  >
-                    Features
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => scrollToSection(howItWorksRef)}
-                    className="text-gray-400 hover:text-white text-sm transition-colors"
-                  >
-                    How It Works
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => scrollToSection(securityRef)}
-                    className="text-gray-400 hover:text-white text-sm transition-colors"
-                  >
-                    Security
-                  </button>
-                </li>
-              </ul>
-            </div>
-
-            {/* Company */}
-            <div>
-              <h3 className="font-semibold text-lg mb-4">Company</h3>
-              <ul className="space-y-3">
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">
-                    Careers
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">
-                    Press
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Legal */}
-            <div>
-              <h3 className="font-semibold text-lg mb-4">Legal</h3>
-              <ul className="space-y-3">
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">
-                    Terms of Service
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">
-                    Security
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+      {/* <footer className="bg-black text-white">
+          
 
           <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm">
             <p>© {new Date().getFullYear()} Elara. All rights reserved.</p>
           </div>
-        </div>
-      </footer>
+      </footer> */}
     </div>
   )
 }
