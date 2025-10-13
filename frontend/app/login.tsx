@@ -36,20 +36,17 @@ export default function LoginScreen() {
   const [formError, setFormError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  const containerBg = useColorModeValue("background.50", "surface.100");
-  const cardBg = useColorModeValue("white", "surface.200");
-  const border = useColorModeValue("coolGray.200", "surface.500");
-  const subtitle = useColorModeValue("coolGray.600", "coolGray.300");
+  const containerBg = useColorModeValue("primary.lightest", "primary.darkest");
+  const cardBg = useColorModeValue("primary.light", "primary.dark");
+  const border = useColorModeValue("primary.dark", "primary.medium");
+  const subtitle = useColorModeValue("primary.darkest", "primary.lightest");
 
   if (loading) {
     return (
       <Center flex={1} bg={containerBg}>
         <VStack space={3} alignItems="center">
-          <Spinner
-            color="primary.400"
-            accessibilityLabel="Loading session state"
-          />
-          <Text color="coolGray.400">Preparing your secure vault...</Text>
+          <Spinner color="primary.light" accessibilityLabel="Loading session state" />
+          <Text color="primary.darkest">Preparing your secure vault...</Text>
         </VStack>
       </Center>
     );
@@ -86,7 +83,7 @@ export default function LoginScreen() {
       toast.show({
         title: "Unable to sign in",
         description,
-        bgColor: "error.600",
+        bgColor: "primary.dark",
       });
       return;
     }
@@ -184,18 +181,14 @@ export default function LoginScreen() {
             <VStack space={3} mt={2}>
               <HStack alignItems="center" space={2}>
                 <Divider flex={1} bg={border} />
-                <Text
-                  fontSize="xs"
-                  color="coolGray.400"
-                  textTransform="uppercase"
-                >
+                <Text fontSize="xs" color="coolGray.400" textTransform="uppercase">
                   or continue with
                 </Text>
                 <Divider flex={1} bg={border} />
               </HStack>
               <Button
                 variant="outline"
-                borderColor="primary.400"
+                borderColor="primary.light"
                 onPress={signInWithGoogle}
                 isLoading={googleLoading}
                 leftIcon={<Icon as={Ionicons} name="logo-google" size="sm" />}

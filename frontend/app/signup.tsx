@@ -39,10 +39,10 @@ export default function SignUpScreen() {
   const [info, setInfo] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  const containerBg = useColorModeValue("background.50", "surface.100");
-  const cardBg = useColorModeValue("white", "surface.200");
-  const border = useColorModeValue("coolGray.200", "surface.500");
-  const subtitle = useColorModeValue("coolGray.600", "coolGray.300");
+  const containerBg = useColorModeValue("primary.lightest", "primary.darkest");
+  const cardBg = useColorModeValue("primary.light", "primary.dark");
+  const border = useColorModeValue("primary.dark", "primary.medium");
+  const subtitle = useColorModeValue("primary.darkest", "primary.lightest");
 
   if (loading) {
     return (
@@ -94,7 +94,7 @@ export default function SignUpScreen() {
       toast.show({
         title: "Sign-up failed",
         description,
-        bgColor: "error.600",
+        bgColor: "primary.dark",
       });
       return;
     }
@@ -111,7 +111,7 @@ export default function SignUpScreen() {
       toast.show({
         title: "Email already in use",
         description: message,
-        bgColor: "error.600",
+        bgColor: "primary.dark",
       });
       return;
     }
@@ -127,7 +127,7 @@ export default function SignUpScreen() {
     toast.show({
       title: "Confirm your email",
       description: message,
-      bgColor: "success.600",
+      bgColor: "primary.light",
     });
   };
 
@@ -205,10 +205,10 @@ export default function SignUpScreen() {
                 <Alert status="success" variant="left-accent" rounded="lg">
                   <VStack space={1}>
                     <Alert.Icon />
-                    <Text color="coolGray.50" fontWeight="600">
+                    <Text color="primary.darkest" fontWeight="600">
                       Confirmation sent
                     </Text>
-                    <Text color="coolGray.100">{info}</Text>
+                    <Text color="primary.darkest">{info}</Text>
                   </VStack>
                 </Alert>
               ) : null}
@@ -255,7 +255,7 @@ export default function SignUpScreen() {
               </HStack>
               <Button
                 variant="outline"
-                borderColor="primary.400"
+                borderColor="primary.light"
                 onPress={signInWithGoogle}
                 isLoading={googleLoading}
                 leftIcon={<Icon as={Ionicons} name="logo-google" size="sm" />}

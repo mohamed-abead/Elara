@@ -11,12 +11,12 @@ import { useAuth } from "@/hooks/use-auth";
 export default function TabLayout() {
   const { session, loading } = useAuth();
   const colorScheme = useColorScheme();
-  const bg = useColorModeValue("background.50", "surface.100");
+  const bg = useColorModeValue("primary.lightest", "primary.darkest");
 
   if (loading) {
     return (
       <Center flex={1} bg={bg}>
-        <Spinner color="primary.400" />
+        <Spinner color="primary.light" />
       </Center>
     );
   }

@@ -8,7 +8,7 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { AuthProvider } from "@/providers/AuthProvider";
-import { elaraTheme } from "@/theme";
+import { elaraTheme } from "@/theme/colors";
 
 WebBrowser.maybeCompleteAuthSession();
 
