@@ -24,7 +24,7 @@ import { Platform } from "react-native";
 
 import { useAuth } from "@/hooks/use-auth";
 import { useGoogleSignIn } from "@/hooks/use-google-sign-in";
-import { supabase } from "@/supabase";
+import { supabase } from "@/.env";
 
 export default function SignUpScreen() {
   const router = useRouter();
@@ -48,7 +48,10 @@ export default function SignUpScreen() {
     return (
       <Center flex={1} bg={containerBg}>
         <VStack space={3} alignItems="center">
-          <Spinner color="primary.400" accessibilityLabel="Loading session state" />
+          <Spinner
+            color="primary.400"
+            accessibilityLabel="Loading session state"
+          />
           <Text color="coolGray.400">Preparing your secure vault...</Text>
         </VStack>
       </Center>
@@ -85,7 +88,8 @@ export default function SignUpScreen() {
     setSubmitting(false);
 
     if (error) {
-      const description = error.message ?? "We were unable to create your account.";
+      const description =
+        error.message ?? "We were unable to create your account.";
       setFormError(description);
       toast.show({
         title: "Sign-up failed",
@@ -96,10 +100,13 @@ export default function SignUpScreen() {
     }
 
     const existingUser =
-      data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0;
+      data.user &&
+      Array.isArray(data.user.identities) &&
+      data.user.identities.length === 0;
 
     if (existingUser) {
-      const message = "That email is already registered. Try logging in instead.";
+      const message =
+        "That email is already registered. Try logging in instead.";
       setFormError(message);
       toast.show({
         title: "Email already in use",
@@ -148,7 +155,8 @@ export default function SignUpScreen() {
               <VStack space={3}>
                 <Heading size="xl">Create your Elara account</Heading>
                 <Text fontSize="md" color={subtitle}>
-                  Join the movement toward gold-backed financial sovereignty in minutes.
+                  Join the movement toward gold-backed financial sovereignty in
+                  minutes.
                 </Text>
               </VStack>
 
@@ -186,7 +194,9 @@ export default function SignUpScreen() {
                     returnKeyType="done"
                   />
                   {formError ? (
-                    <FormControl.ErrorMessage>{formError}</FormControl.ErrorMessage>
+                    <FormControl.ErrorMessage>
+                      {formError}
+                    </FormControl.ErrorMessage>
                   ) : null}
                 </FormControl>
               </VStack>
@@ -206,7 +216,9 @@ export default function SignUpScreen() {
               <Button
                 onPress={handleSubmit}
                 isLoading={submitting}
-                leftIcon={<Icon as={Ionicons} name="sparkles-outline" size="sm" />}
+                leftIcon={
+                  <Icon as={Ionicons} name="sparkles-outline" size="sm" />
+                }
               >
                 Create account
               </Button>
@@ -215,7 +227,9 @@ export default function SignUpScreen() {
                 variant="ghost"
                 colorScheme="primary"
                 onPress={() => router.push("/login")}
-                leftIcon={<Icon as={Ionicons} name="log-in-outline" size="sm" />}
+                leftIcon={
+                  <Icon as={Ionicons} name="log-in-outline" size="sm" />
+                }
               >
                 I already have an account
               </Button>
@@ -230,7 +244,11 @@ export default function SignUpScreen() {
             <VStack space={3} mt={2}>
               <HStack alignItems="center" space={2}>
                 <Divider flex={1} bg={border} />
-                <Text fontSize="xs" color="coolGray.400" textTransform="uppercase">
+                <Text
+                  fontSize="xs"
+                  color="coolGray.400"
+                  textTransform="uppercase"
+                >
                   or continue with
                 </Text>
                 <Divider flex={1} bg={border} />

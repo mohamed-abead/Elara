@@ -2,10 +2,14 @@ import { useEffect } from "react";
 import { Center, Spinner, Text, VStack } from "native-base";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
-import { supabase } from "@/supabase";
+import { supabase } from "@/.env";
 
 export default function AuthCallback() {
-  const params = useLocalSearchParams<{ code?: string; error?: string; error_description?: string }>();
+  const params = useLocalSearchParams<{
+    code?: string;
+    error?: string;
+    error_description?: string;
+  }>();
   const router = useRouter();
 
   useEffect(() => {
@@ -14,7 +18,9 @@ export default function AuthCallback() {
         return;
       }
 
-      const codeParam = Array.isArray(params.code) ? params.code[0] : params.code;
+      const codeParam = Array.isArray(params.code)
+        ? params.code[0]
+        : params.code;
 
       if (codeParam) {
         const { error } = await supabase.auth.exchangeCodeForSession(codeParam);

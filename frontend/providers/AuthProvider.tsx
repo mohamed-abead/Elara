@@ -1,7 +1,13 @@
 import { Session, User } from "@supabase/supabase-js";
-import { PropsWithChildren, createContext, useEffect, useMemo, useState } from "react";
+import {
+  PropsWithChildren,
+  createContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
-import { supabase } from "@/supabase";
+import { supabase } from "@/.env";
 
 type AuthContextValue = {
   session: Session | null;
@@ -11,7 +17,9 @@ type AuthContextValue = {
   refreshSession: () => Promise<void>;
 };
 
-export const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+export const AuthContext = createContext<AuthContextValue | undefined>(
+  undefined
+);
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [session, setSession] = useState<Session | null>(null);
@@ -41,11 +49,13 @@ export function AuthProvider({ children }: PropsWithChildren) {
       }
     };
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
-      if (isMounted) {
-        setSession(newSession);
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, newSession) => {
+        if (isMounted) {
+          setSession(newSession);
+        }
       }
-    });
+    );
 
     initSession();
 
@@ -74,7 +84,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
         setSession(data.session);
       },
     }),
-    [loading, session],
+    [loading, session]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

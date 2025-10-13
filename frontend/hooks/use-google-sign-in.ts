@@ -3,7 +3,7 @@ import * as WebBrowser from "expo-web-browser";
 import { useState } from "react";
 import { Platform } from "react-native";
 
-import { supabase } from "@/supabase";
+import { supabase } from "@/.env";
 
 const AUTH_PATH = "auth/callback";
 

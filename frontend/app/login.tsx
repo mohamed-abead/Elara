@@ -23,7 +23,7 @@ import { Platform } from "react-native";
 
 import { useAuth } from "@/hooks/use-auth";
 import { useGoogleSignIn } from "@/hooks/use-google-sign-in";
-import { supabase } from "@/supabase";
+import { supabase } from "@/.env";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -45,7 +45,10 @@ export default function LoginScreen() {
     return (
       <Center flex={1} bg={containerBg}>
         <VStack space={3} alignItems="center">
-          <Spinner color="primary.400" accessibilityLabel="Loading session state" />
+          <Spinner
+            color="primary.400"
+            accessibilityLabel="Loading session state"
+          />
           <Text color="coolGray.400">Preparing your secure vault...</Text>
         </VStack>
       </Center>
@@ -77,7 +80,8 @@ export default function LoginScreen() {
 
     if (error) {
       const description =
-        error?.message ?? "We could not verify your credentials. Please try again.";
+        error?.message ??
+        "We could not verify your credentials. Please try again.";
       setFormError(description);
       toast.show({
         title: "Unable to sign in",
@@ -114,7 +118,8 @@ export default function LoginScreen() {
               <VStack space={3}>
                 <Heading size="xl">Welcome back to Elara</Heading>
                 <Text fontSize="md" color={subtitle}>
-                  Sign in to access your gold-backed balance and portfolio controls.
+                  Sign in to access your gold-backed balance and portfolio
+                  controls.
                 </Text>
               </VStack>
 
@@ -141,7 +146,9 @@ export default function LoginScreen() {
                     returnKeyType="done"
                   />
                   {formError ? (
-                    <FormControl.ErrorMessage>{formError}</FormControl.ErrorMessage>
+                    <FormControl.ErrorMessage>
+                      {formError}
+                    </FormControl.ErrorMessage>
                   ) : null}
                 </FormControl>
               </VStack>
@@ -149,7 +156,9 @@ export default function LoginScreen() {
               <Button
                 onPress={handleSubmit}
                 isLoading={submitting}
-                leftIcon={<Icon as={Ionicons} name="log-in-outline" size="sm" />}
+                leftIcon={
+                  <Icon as={Ionicons} name="log-in-outline" size="sm" />
+                }
               >
                 Log in
               </Button>
@@ -158,7 +167,9 @@ export default function LoginScreen() {
                 variant="ghost"
                 colorScheme="primary"
                 onPress={() => router.push("/signup")}
-                leftIcon={<Icon as={Ionicons} name="person-add-outline" size="sm" />}
+                leftIcon={
+                  <Icon as={Ionicons} name="person-add-outline" size="sm" />
+                }
               >
                 Create an Elara account
               </Button>
@@ -173,7 +184,11 @@ export default function LoginScreen() {
             <VStack space={3} mt={2}>
               <HStack alignItems="center" space={2}>
                 <Divider flex={1} bg={border} />
-                <Text fontSize="xs" color="coolGray.400" textTransform="uppercase">
+                <Text
+                  fontSize="xs"
+                  color="coolGray.400"
+                  textTransform="uppercase"
+                >
                   or continue with
                 </Text>
                 <Divider flex={1} bg={border} />
