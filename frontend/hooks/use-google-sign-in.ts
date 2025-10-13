@@ -3,12 +3,27 @@ import * as WebBrowser from "expo-web-browser";
 import { useState } from "react";
 import { Platform } from "react-native";
 
-import { supabase } from "@/supabase";
+import { supabase } from "@/.env";
+import { createWalletIfNeeded } from "@/utils/wallet";
 
 const AUTH_PATH = "auth/callback";
 
-export function useGoogleSignIn() {
+type UseGoogleSignInOptions = {
+  onWalletMessage?: (msg: string) => void;
+};
+
+export function useGoogleSignIn(options: UseGoogleSignInOptions = {}) {
   const [googleLoading, setGoogleLoading] = useState(false);
+  const { onWalletMessage } = options;
+
+  const ensureWallet = async () => {
+    const { data } = await supabase.auth.getSession();
+    const accessToken = data.session?.access_token;
+
+    if (accessToken) {
+      await createWalletIfNeeded(accessToken, onWalletMessage);
+    }
+  };
 
   const signInWithGoogle = async () => {
     if (googleLoading) {
@@ -64,10 +79,19 @@ export function useGoogleSignIn() {
         }
 
         if (code) {
-          const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+          const { data: exchangeData, error: exchangeError } =
+            await supabase.auth.exchangeCodeForSession(code);
 
           if (exchangeError) {
             throw exchangeError;
+          }
+
+          const exchangeAccessToken = exchangeData?.session?.access_token;
+
+          if (exchangeAccessToken) {
+            await createWalletIfNeeded(exchangeAccessToken, onWalletMessage);
+          } else {
+            await ensureWallet();
           }
         }
       }

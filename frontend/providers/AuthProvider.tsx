@@ -1,7 +1,14 @@
 import { Session, User } from "@supabase/supabase-js";
-import { PropsWithChildren, createContext, useEffect, useMemo, useState } from "react";
+import {
+  PropsWithChildren,
+  createContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
-import { supabase } from "@/supabase";
+import { supabase } from "@/.env";
 
 type AuthContextValue = {
   session: Session | null;
@@ -42,9 +49,9 @@ export function AuthProvider({ children }: PropsWithChildren) {
     };
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
-      if (isMounted) {
-        setSession(newSession);
-      }
+        if (isMounted) {
+          setSession(newSession);
+        }
     });
 
     initSession();

@@ -24,7 +24,7 @@ import { Platform } from "react-native";
 
 import { useAuth } from "@/hooks/use-auth";
 import { useGoogleSignIn } from "@/hooks/use-google-sign-in";
-import { supabase } from "@/supabase";
+import { supabase } from "@/.env";
 
 export default function SignUpScreen() {
   const router = useRouter();
@@ -78,50 +78,50 @@ export default function SignUpScreen() {
     }
 
     setSubmitting(true);
-    const { data, error } = await supabase.auth.signUp({
-      email: email.trim(),
-      password,
-    });
+      const { data, error } = await supabase.auth.signUp({
+        email: email.trim(),
+        password,
+      });
     setSubmitting(false);
 
-    if (error) {
+      if (error) {
       const description = error.message ?? "We were unable to create your account.";
-      setFormError(description);
-      toast.show({
-        title: "Sign-up failed",
-        description,
-        bgColor: "error.600",
-      });
-      return;
-    }
+        setFormError(description);
+        toast.show({
+          title: "Sign-up failed",
+          description,
+          bgColor: "error.600",
+        });
+        return;
+      }
 
-    const existingUser =
+      const existingUser =
       data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0;
 
-    if (existingUser) {
+      if (existingUser) {
       const message = "That email is already registered. Try logging in instead.";
-      setFormError(message);
+        setFormError(message);
+        toast.show({
+          title: "Email already in use",
+          description: message,
+          bgColor: "error.600",
+        });
+        return;
+      }
+
+      if (data.session) {
+        router.replace("/(tabs)");
+        return;
+      }
+
+      const message =
+        "Your vault is almost ready. Check your inbox to confirm your email and activate your Elara account.";
+      setInfo(message);
       toast.show({
-        title: "Email already in use",
+        title: "Confirm your email",
         description: message,
-        bgColor: "error.600",
+        bgColor: "success.600",
       });
-      return;
-    }
-
-    if (data.session) {
-      router.replace("/(tabs)");
-      return;
-    }
-
-    const message =
-      "Your vault is almost ready. Check your inbox to confirm your email and activate your Elara account.";
-    setInfo(message);
-    toast.show({
-      title: "Confirm your email",
-      description: message,
-      bgColor: "success.600",
-    });
   };
 
   return (

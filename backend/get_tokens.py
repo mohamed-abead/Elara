@@ -1,8 +1,8 @@
 import os
 from supabase import create_client
 
-SUPABASE_URL = "https://yfiyslodzryobhxfefys.supabase.co"
-ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlmaXlzbG9kenJ5b2JoeGZlZnlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAyNjk1MTQsImV4cCI6MjA3NTg0NTUxNH0.xiJHflgoAs1Sp7bKLjtpqh1UPzwVuhuQFagKJReUsYo"
+SUPABASE_URL = "https://khfjumqlmkvjlzbrajrb.supabase.co"
+ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoZmp1bXFsbWt2amx6YnJhanJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAzMDA4MzksImV4cCI6MjA3NTg3NjgzOX0.5mTzrQF_XkGam5TEBnII5u6kKdv9TgK7wLj8nnZ80iI"
 
 email = "tmpuser@gmail.com"         # the user you created
 password = "12345678"       # set this when you created the user
