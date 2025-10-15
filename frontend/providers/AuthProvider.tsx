@@ -18,7 +18,9 @@ type AuthContextValue = {
   refreshSession: () => Promise<void>;
 };
 
-export const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+export const AuthContext = createContext<AuthContextValue | undefined>(
+  undefined
+);
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [session, setSession] = useState<Session | null>(null);
@@ -81,7 +83,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
         setSession(data.session);
       },
     }),
-    [loading, session],
+    [loading, session]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

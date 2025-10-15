@@ -45,10 +45,10 @@ export default function LoginScreen() {
   const [formError, setFormError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  const containerBg = useColorModeValue("background.50", "surface.100");
-  const cardBg = useColorModeValue("white", "surface.200");
-  const border = useColorModeValue("coolGray.200", "surface.500");
-  const subtitle = useColorModeValue("coolGray.600", "coolGray.300");
+  const containerBg = useColorModeValue("primary.lightest", "primary.darkest");
+  const cardBg = useColorModeValue("primary.light", "primary.dark");
+  const border = useColorModeValue("primary.dark", "primary.medium");
+  const subtitle = useColorModeValue("primary.darkest", "primary.lightest");
 
   if (loading) {
     return (
@@ -59,6 +59,7 @@ export default function LoginScreen() {
             accessibilityLabel="Loading session state"
           />
           <Text color="coolGray.400">Preparing your secure vault...</Text>
+
         </VStack>
       </Center>
     );
@@ -95,7 +96,7 @@ export default function LoginScreen() {
       toast.show({
         title: "Unable to sign in",
         description,
-        bgColor: "error.600",
+        bgColor: "primary.dark",
       });
       return;
     }
@@ -208,7 +209,7 @@ export default function LoginScreen() {
               </HStack>
               <Button
                 variant="outline"
-                borderColor="primary.400"
+                borderColor="primary.light"
                 onPress={signInWithGoogle}
                 isLoading={googleLoading}
                 leftIcon={<Icon as={Ionicons} name="logo-google" size="sm" />}

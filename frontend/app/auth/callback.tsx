@@ -5,6 +5,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { supabase } from "@/.env";
 import { createWalletIfNeeded } from "@/utils/wallet";
 
+
 export default function AuthCallback() {
   const params = useLocalSearchParams<{
     code?: string;
@@ -94,10 +95,10 @@ export default function AuthCallback() {
     : "Finalising sign-in…";
 
   return (
-    <Center flex={1} bg="surface.100">
+    <Center flex={1} bg="primary.light">
       <VStack space={4} alignItems="center">
-        {!params.error ? <Spinner color="primary.400" /> : null}
-        <Text color="coolGray.200" textAlign="center">
+        {!params.error ? <Spinner color="primary.light" /> : null}
+        <Text color="primary.darkest" textAlign="center">
           {message}
         </Text>
       </VStack>

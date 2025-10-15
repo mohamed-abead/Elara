@@ -78,9 +78,9 @@ export default function HomeScreen() {
   const { user, signOut } = useAuth();
   const [signingOut, setSigningOut] = useState(false);
 
-  const surface = useColorModeValue("background.50", "surface.100");
-  const panel = useColorModeValue("coolGray.50", "surface.300");
-  const border = useColorModeValue("coolGray.200", "surface.500");
+  const surface = useColorModeValue("primary.lightest", "primary.darkest");
+  const panel = useColorModeValue("primary.light", "primary.dark");
+  const border = useColorModeValue("primary.dark", "primary.medium");
   const insightColumns = useBreakpointValue({ base: 1, md: 3 }) ?? 1;
   const actionColumns = useBreakpointValue({ base: 1, md: 3 }) ?? 1;
   const featureRows = useMemo(() => {
@@ -110,7 +110,7 @@ export default function HomeScreen() {
       toast.show({
         title: "Sign-out failed",
         description,
-        bgColor: "error.600",
+        bgColor: "primary.dark",
       });
     } finally {
       setSigningOut(false);
@@ -123,7 +123,7 @@ export default function HomeScreen() {
         <Box
           bg={{
             linearGradient: {
-              colors: ["secondary.900", "surface.300"],
+              colors: ["primary.darkest", "primary.light"],
               start: [0, 0],
               end: [1, 1],
             },
@@ -132,15 +132,15 @@ export default function HomeScreen() {
           px={{ base: 6, md: 10 }}
           py={{ base: 8, md: 12 }}
           borderWidth={1}
-          borderColor="surface.500"
+          borderColor="primary.dark"
           shadow={8}
         >
           <VStack space={6}>
             <Badge
               alignSelf="flex-start"
               variant="outline"
-              borderColor="primary.400"
-              _text={{ color: "primary.200", fontSize: "xs" }}
+              borderColor="primary.light"
+              _text={{ color: "primary.lightest", fontSize: "xs" }}
               rounded="full"
               px={3}
               py={1}
@@ -148,13 +148,13 @@ export default function HomeScreen() {
               Gold-backed sovereignty
             </Badge>
             <VStack space={3}>
-              <Text color="coolGray.200" fontSize="md">
+              <Text color="primary.darkest" fontSize="md">
                 {user?.email ? "Account owner" : "You’re moments away from financial calm"}
               </Text>
-              <Heading size="xl" color="coolGray.50">
+              <Heading size="xl" color="primary.darkest">
                 {welcomeHeading}
               </Heading>
-              <Text fontSize="md" color="coolGray.200">
+              <Text fontSize="md" color="primary.darkest">
                 See how your gold-backed balance is performing, and take action with confidence in
                 a single tap.
               </Text>
@@ -191,7 +191,7 @@ export default function HomeScreen() {
                   toast.show({
                     title: "Vault insights",
                     description: "Detailed analytics are coming soon to the Elara dashboard.",
-                    bgColor: "primary.700",
+                    bgColor: "primary.dark",
                   })
                 }
                 rightIcon={<Icon as={Ionicons} name="arrow-forward-outline" size="sm" />}
@@ -209,15 +209,15 @@ export default function HomeScreen() {
                   borderRadius="lg"
                   px={4}
                   py={5}
-                  bg="surface.200"
+                  bg="primary.light"
                 >
-                  <Text fontSize="sm" color="coolGray.300">
+                  <Text fontSize="sm" color="primary.darkest">
                     {item.label}
                   </Text>
-                  <Heading size="lg" mt={2} color="primary.200">
+                  <Heading size="lg" mt={2} color="primary.lightest">
                     {item.value}
                   </Heading>
-                  <Text fontSize="sm" color="primary.300" mt={1}>
+                  <Text fontSize="sm" color="primary.light" mt={1}>
                     {item.change}
                   </Text>
                 </Box>
@@ -237,7 +237,7 @@ export default function HomeScreen() {
           <VStack space={6}>
             <VStack space={2}>
               <Heading size="md">Why members choose Elara</Heading>
-              <Text fontSize="md" color="coolGray.200">
+              <Text fontSize="md" color="primary.darkest">
                 A platform that marries the certainty of physical gold with the dynamism of modern
                 finance.
               </Text>
@@ -258,24 +258,24 @@ export default function HomeScreen() {
                       borderRadius="lg"
                       px={4}
                       py={5}
-                      bg="surface.200"
+                      bg="primary.light"
                       flex={1}
                       minW={0}
                     >
                       <HStack space={3} alignItems="flex-start">
                         <Box
-                          bg="primary.500"
+                          bg="primary.medium"
                           borderRadius="full"
                           p={3}
                           shadow={4}
                           borderWidth={1}
-                          borderColor="primary.300"
+                          borderColor="primary.light"
                         >
-                          <Icon as={Ionicons} name={feature.icon} color="secondary.900" size="md" />
+                          <Icon as={Ionicons} name={feature.icon} color="primary.darkest" size="md" />
                         </Box>
                         <VStack space={2} flex={1}>
                           <Heading size="sm">{feature.title}</Heading>
-                          <Text fontSize="sm" color="coolGray.300">
+                          <Text fontSize="sm" color="primary.darkest">
                             {feature.description}
                           </Text>
                         </VStack>
@@ -299,7 +299,7 @@ export default function HomeScreen() {
         >
           <VStack space={4}>
             <Heading size="md">Take action</Heading>
-            <Text fontSize="sm" color="coolGray.300">
+            <Text fontSize="sm" color="primary.darkest">
               Move with the market, without sacrificing the integrity of your holdings.
             </Text>
             <SimpleGrid columns={actionColumns} space={3}>
@@ -307,14 +307,14 @@ export default function HomeScreen() {
                 <Button
                   key={action.label}
                   variant="outline"
-                  borderColor="primary.400"
+                  borderColor="primary.light"
                   colorScheme="primary"
                   leftIcon={<Icon as={Ionicons} name={action.icon} size="sm" />}
                   onPress={() =>
                     toast.show({
                       title: action.label,
                       description: action.message,
-                      bgColor: "secondary.700",
+                      bgColor: "primary.dark",
                     })
                   }
                 >

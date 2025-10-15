@@ -39,16 +39,19 @@ export default function SignUpScreen() {
   const [info, setInfo] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  const containerBg = useColorModeValue("background.50", "surface.100");
-  const cardBg = useColorModeValue("white", "surface.200");
-  const border = useColorModeValue("coolGray.200", "surface.500");
-  const subtitle = useColorModeValue("coolGray.600", "coolGray.300");
+  const containerBg = useColorModeValue("primary.lightest", "primary.darkest");
+  const cardBg = useColorModeValue("primary.light", "primary.dark");
+  const border = useColorModeValue("primary.dark", "primary.medium");
+  const subtitle = useColorModeValue("primary.darkest", "primary.lightest");
 
   if (loading) {
     return (
       <Center flex={1} bg={containerBg}>
         <VStack space={3} alignItems="center">
-          <Spinner color="primary.400" accessibilityLabel="Loading session state" />
+          <Spinner
+            color="primary.400"
+            accessibilityLabel="Loading session state"
+          />
           <Text color="coolGray.400">Preparing your secure vault...</Text>
         </VStack>
       </Center>
@@ -148,7 +151,8 @@ export default function SignUpScreen() {
               <VStack space={3}>
                 <Heading size="xl">Create your Elara account</Heading>
                 <Text fontSize="md" color={subtitle}>
-                  Join the movement toward gold-backed financial sovereignty in minutes.
+                  Join the movement toward gold-backed financial sovereignty in
+                  minutes.
                 </Text>
               </VStack>
 
@@ -186,7 +190,9 @@ export default function SignUpScreen() {
                     returnKeyType="done"
                   />
                   {formError ? (
-                    <FormControl.ErrorMessage>{formError}</FormControl.ErrorMessage>
+                    <FormControl.ErrorMessage>
+                      {formError}
+                    </FormControl.ErrorMessage>
                   ) : null}
                 </FormControl>
               </VStack>
@@ -195,10 +201,10 @@ export default function SignUpScreen() {
                 <Alert status="success" variant="left-accent" rounded="lg">
                   <VStack space={1}>
                     <Alert.Icon />
-                    <Text color="coolGray.50" fontWeight="600">
+                    <Text color="primary.darkest" fontWeight="600">
                       Confirmation sent
                     </Text>
-                    <Text color="coolGray.100">{info}</Text>
+                    <Text color="primary.darkest">{info}</Text>
                   </VStack>
                 </Alert>
               ) : null}
@@ -206,7 +212,9 @@ export default function SignUpScreen() {
               <Button
                 onPress={handleSubmit}
                 isLoading={submitting}
-                leftIcon={<Icon as={Ionicons} name="sparkles-outline" size="sm" />}
+                leftIcon={
+                  <Icon as={Ionicons} name="sparkles-outline" size="sm" />
+                }
               >
                 Create account
               </Button>
@@ -215,7 +223,9 @@ export default function SignUpScreen() {
                 variant="ghost"
                 colorScheme="primary"
                 onPress={() => router.push("/login")}
-                leftIcon={<Icon as={Ionicons} name="log-in-outline" size="sm" />}
+                leftIcon={
+                  <Icon as={Ionicons} name="log-in-outline" size="sm" />
+                }
               >
                 I already have an account
               </Button>
@@ -230,14 +240,18 @@ export default function SignUpScreen() {
             <VStack space={3} mt={2}>
               <HStack alignItems="center" space={2}>
                 <Divider flex={1} bg={border} />
-                <Text fontSize="xs" color="coolGray.400" textTransform="uppercase">
+                <Text
+                  fontSize="xs"
+                  color="coolGray.400"
+                  textTransform="uppercase"
+                >
                   or continue with
                 </Text>
                 <Divider flex={1} bg={border} />
               </HStack>
               <Button
                 variant="outline"
-                borderColor="primary.400"
+                borderColor="primary.light"
                 onPress={signInWithGoogle}
                 isLoading={googleLoading}
                 leftIcon={<Icon as={Ionicons} name="logo-google" size="sm" />}
