@@ -2,9 +2,10 @@ import os, time, httpx
 from functools import lru_cache
 from jose import jwt
 from fastapi import HTTPException
+from core.settings import settings
 
-JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET")           # for HS256 projects
-JWKS_URL   = os.getenv("SUPABASE_JWKS_URL")             # only used if alg is RS256/ES256
+JWT_SECRET = settings.SUPABASE_JWT_SECRET           # for HS256 projects
+JWKS_URL   = settings.SUPABASE_JWKS_URL             # only used if alg is RS256/ES256
 
 @lru_cache(maxsize=1)
 def _jwks():

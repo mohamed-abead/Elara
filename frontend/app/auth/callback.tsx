@@ -1,8 +1,10 @@
 import { useEffect } from "react";
-import { Center, Spinner, Text, VStack } from "native-base";
+import { Center, Spinner, Text, VStack, useToast } from "native-base";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
 import { supabase } from "@/.env";
+import { createWalletIfNeeded } from "@/utils/wallet";
+
 
 export default function AuthCallback() {
   const params = useLocalSearchParams<{
@@ -11,6 +13,22 @@ export default function AuthCallback() {
     error_description?: string;
   }>();
   const router = useRouter();
+  const toast = useToast();
+  const showWalletToast = (msg: string) =>
+    toast.show({
+      title: "Wallet setup",
+      description: msg,
+      bgColor: "warning.600",
+    });
+
+  const ensureWallet = async () => {
+    const { data } = await supabase.auth.getSession();
+    const accessToken = data.session?.access_token;
+
+    if (accessToken) {
+      await createWalletIfNeeded(accessToken, showWalletToast);
+    }
+  };
 
   useEffect(() => {
     const handleExchange = async () => {
@@ -23,9 +41,15 @@ export default function AuthCallback() {
         : params.code;
 
       if (codeParam) {
-        const { error } = await supabase.auth.exchangeCodeForSession(codeParam);
+        const { data: exchangeData, error } = await supabase.auth.exchangeCodeForSession(codeParam);
 
         if (!error) {
+          const accessToken = exchangeData?.session?.access_token;
+          if (accessToken) {
+            await createWalletIfNeeded(accessToken, showWalletToast);
+          } else {
+            await ensureWallet();
+          }
           router.replace("/(tabs)");
         }
       }
@@ -40,13 +64,16 @@ export default function AuthCallback() {
     const syncSession = async () => {
       const { data } = await supabase.auth.getSession();
       if (isMounted && data.session) {
+        await createWalletIfNeeded(data.session.access_token, showWalletToast);
         router.replace("/(tabs)");
       }
     };
 
     const { data: subscription } = supabase.auth.onAuthStateChange((event) => {
       if (event === "SIGNED_IN") {
-        router.replace("/(tabs)");
+        void ensureWallet().finally(() => {
+          router.replace("/(tabs)");
+        });
       }
     });
 

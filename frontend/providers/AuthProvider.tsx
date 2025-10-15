@@ -4,6 +4,7 @@ import {
   createContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -49,13 +50,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
       }
     };
 
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, newSession) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
         if (isMounted) {
           setSession(newSession);
         }
-      }
-    );
+    });
 
     initSession();
 
