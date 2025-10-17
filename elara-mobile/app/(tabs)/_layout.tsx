@@ -1,14 +1,16 @@
 // app/(tabs)/_layout.tsx
-import React from "react";
-import { Tabs, Redirect } from "expo-router";
+import React, { useCallback } from "react";
+import { Tabs, Redirect, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import {
+  HStack,
   IconButton,
   Spinner,
   Text,
   VStack,
   useTheme,
   useToken,
+  useToast,
 } from "native-base";
 import { ThemedHeader } from "@/components/ThemedHeader";
 import ScreenContainer from "@/components/ScreenContainer";
@@ -16,7 +18,9 @@ import { useAuth } from "@/hooks/useAuth";
 
 export default function TabsLayout() {
   const theme = useTheme();
-  const { session, loading } = useAuth();
+  const router = useRouter();
+  const toast = useToast();
+  const { session, loading, signOut } = useAuth();
 
   // Typed references (IntelliSense + compile-time safety)
   const bg = theme.colors.semantic.background;
@@ -25,6 +29,47 @@ export default function TabsLayout() {
 
   // Only needed because tabBarStyle is a plain React style object (not a NB prop)
   const [bgHex] = useToken("colors", ["semantic.background"]);
+
+  const handleSignOut = useCallback(async () => {
+    try {
+      await signOut();
+      router.replace("/(auth)");
+    } catch (error: any) {
+      toast.show({
+        title: "Sign out failed",
+        description: error?.message ?? "Please try again.",
+        bgColor: "error.600",
+      });
+    }
+  }, [router, signOut, toast]);
+
+  const primaryHeaderActions = (
+    <HStack space={1}>
+      <IconButton
+        variant="ghost"
+        _icon={{
+          as: Ionicons,
+          name: "notifications-outline",
+          size: "lg",
+          color: inactive,
+        }}
+        _pressed={{ opacity: 0.7 }}
+        accessibilityLabel="Notifications"
+      />
+      <IconButton
+        variant="ghost"
+        _icon={{
+          as: Ionicons,
+          name: "log-out-outline",
+          size: "lg",
+          color: inactive,
+        }}
+        _pressed={{ opacity: 0.7 }}
+        accessibilityLabel="Sign out"
+        onPress={handleSignOut}
+      />
+    </HStack>
+  );
 
   if (loading) {
     return (
@@ -64,55 +109,27 @@ export default function TabsLayout() {
           header: ({ options, route }) => (
             <ThemedHeader
               title={(options.title as string) ?? route.name}
-              right={
-                <IconButton
-                  variant="ghost"
-                  _icon={{
-                    as: Ionicons,
-                    name: "notifications-outline",
-                    size: "lg",
-                    color: inactive, 
-                  }}
-                  _pressed={{ opacity: 0.7 }}
-                />
-              }
+              right={primaryHeaderActions}
             />
           ),
         }}
       />
 
       <Tabs.Screen
-        name="wallet"
+        name="transfer"
         options={{
-          title: "Wallet",
+          title: "Transfer",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="wallet-outline" color={color} size={size} />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person-outline" color={color} size={size} />
+            <Ionicons
+              name="swap-horizontal-outline"
+              color={color}
+              size={size}
+            />
           ),
           header: ({ options, route }) => (
             <ThemedHeader
               title={(options.title as string) ?? route.name}
-              right={
-                <IconButton
-                  variant="ghost"
-                  _icon={{
-                    as: Ionicons,
-                    name: "settings-outline",
-                    size: "lg",
-                    color: inactive, // ✅ typed reference
-                  }}
-                  _pressed={{ opacity: 0.7 }}
-                />
-              }
+              right={primaryHeaderActions}
             />
           ),
         }}

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Header
 from typing import Annotated
-from clients.privy_client import create_privy_user, extract_primary_wallet
+from clients.privy_client import create_privy_user, extract_primary_wallet, get_wallet_balance
 from clients.supabase_client import postgrest_as_user
 from core.security import verify_supabase_jwt
 
@@ -13,16 +13,16 @@ def current_user(authorization: Annotated[str | None, Header()] = None):
     return {"token": token, "claims": verify_supabase_jwt(token)}
 
 
-@router.post("/wallet")
+@router.post("/create_wallet")
 def create_or_get_wallet(user=Depends(current_user)):
     user_id = user["claims"]["sub"]
 
     # 1) Check if wallet exists already
     with postgrest_as_user(user["token"]) as pg:
-        r = pg.get("/profiles", params={"select": "wallet_address", "id": f"eq.{user_id}"})
+        r = pg.get("/profiles", params={"select": "wallet_id", "id": f"eq.{user_id}"})
         rows = r.json()
-        if rows and rows[0].get("wallet_address"):
-            return {"wallet": {"address": rows[0]["wallet_address"]}, "status": "exists"}
+        if rows and rows[0].get("wallet_id"):
+            return {"wallet": {"wallet_id": rows[0]["wallet_id"]}, "status": "exists"}
 
     # 2) Create/ensure Privy user; extract wallet directly from linked_accounts
     privy_user = create_privy_user(user_id)
@@ -36,7 +36,8 @@ def create_or_get_wallet(user=Depends(current_user)):
             "/profiles",
             json={
                 "id": user_id,
-                "wallet_address": wallet["address"],
+                "wallet_address": wallet["wallet_address"],
+                "wallet_id": wallet["wallet_id"],
                 "privy_user_id": privy_user["id"],
                 "wallet_chain_id": wallet.get("chain_id"),
                 "wallet_chain_type": wallet.get("chain_type"),
@@ -49,3 +50,18 @@ def create_or_get_wallet(user=Depends(current_user)):
         )
 
     return {"wallet": wallet, "status": "created"}
+
+@router.get("/get_balance")
+def get_balance(user=Depends(current_user)):
+    user_id = user["claims"]["sub"]
+    
+    with postgrest_as_user(user["token"]) as pg:
+        r = pg.get("/profiles", params={"select": "wallet_id, wallet_chain_type", "id": f"eq.{user_id}"})
+        rows = r.json()
+        if rows and rows[0].get("wallet_id"):
+            wallet_id = rows[0].get("wallet_id")
+            chain = rows[0].get("wallet_chain_type")
+        else:
+            raise HTTPException(404, "No wallet associated with the user")
+
+    return get_wallet_balance(wallet_id, chain)['total_usd']

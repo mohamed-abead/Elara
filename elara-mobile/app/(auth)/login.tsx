@@ -23,7 +23,6 @@ import { Platform } from "react-native";
 import { useAuth } from "@/hooks/useAuth";
 import { useGoogleSignIn } from "@/hooks/useGoogleSignIn";
 import { supabase } from "@/.env";
-import { createWalletIfNeeded } from "@/utils/wallet";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -86,18 +85,6 @@ export default function LoginScreen() {
         bgColor: "error.600",
       });
       return;
-    }
-
-    let accessToken = data.session?.access_token;
-
-    if (accessToken) {
-      await createWalletIfNeeded(accessToken, (message) =>
-        toast.show({
-          title: "Wallet setup failed",
-          description: message,
-          bgColor: "error.600",
-        })
-      );
     }
 
     router.replace("/(tabs)");
