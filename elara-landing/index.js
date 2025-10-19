@@ -140,3 +140,80 @@ sections.forEach((sec) => {
 
 
 })
+
+// ------------- Email Form Submission ---------------
+
+// Simple email submission to Google Form
+function handleEmailSubmission() {
+    const emailInput = document.getElementById('email-input');
+    const email = emailInput.value;
+    
+    // Create hidden iframe for silent submission
+    let iframe = document.getElementById('hidden-iframe');
+    if (!iframe) {
+        iframe = document.createElement('iframe');
+        iframe.id = 'hidden-iframe';
+        iframe.name = 'hidden-iframe';
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+    }
+    
+    // Create a form that submits to Google Form
+    const form = document.createElement('form');
+    form.action = 'https://docs.google.com/forms/d/e/1FAIpQLScWvLu6qzWk_Gecgjoju2_dQ6QU_J9pFW3WFrUYMPsps7fLNA/formResponse';
+    form.method = 'POST';
+    form.target = 'hidden-iframe';
+    form.style.display = 'none';
+    
+    // Add the email field (replace with actual entry ID from your Google Form)
+    const emailField = document.createElement('input');
+    emailField.type = 'hidden';
+    emailField.name = 'entry.182849506'; // Replace with actual entry ID
+    emailField.value = email;
+    form.appendChild(emailField);
+    
+    // Submit the form
+    document.body.appendChild(form);
+    form.submit();
+    
+    // Hide the input field and button
+    const formContainer = emailInput.closest('.tw-flex');
+    const submitBtn = document.getElementById('email-submit-btn');
+    
+    formContainer.style.display = 'none';
+    
+    // Create and show thank you message
+    const thankYouMessage = document.createElement('div');
+    thankYouMessage.textContent = 'Thank you for joining. We will be in touch soon.';
+    thankYouMessage.style.color = '#10b981';
+    thankYouMessage.style.fontSize = '1.2rem';
+    thankYouMessage.style.fontWeight = '500';
+    thankYouMessage.style.textAlign = 'center';
+    thankYouMessage.style.padding = '20px';
+    
+    // Insert the message after the form container
+    formContainer.parentNode.insertBefore(thankYouMessage, formContainer.nextSibling);
+    
+    // Clean up
+    setTimeout(() => {
+        document.body.removeChild(form);
+    }, 1000);
+}
+
+// Add event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    const submitBtn = document.getElementById('email-submit-btn');
+    const emailInput = document.getElementById('email-input');
+    
+    if (submitBtn) {
+        submitBtn.addEventListener('click', handleEmailSubmission);
+    }
+    
+    if (emailInput) {
+        emailInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleEmailSubmission();
+            }
+        });
+    }
+});

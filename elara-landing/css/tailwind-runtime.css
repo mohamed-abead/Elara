@@ -715,8 +715,8 @@ video {
   min-height: 80vh;
 }
 
-.tw-w-\[150px\] {
-  width: 150px;
+.tw-w-\[100px\] {
+  width: 100px;
 }
 
 .tw-w-\[200px\] {
@@ -841,6 +841,10 @@ video {
 
 .tw-items-center {
   align-items: center;
+}
+
+.tw-justify-center {
+  justify-content: center;
 }
 
 .tw-gap-1 {
