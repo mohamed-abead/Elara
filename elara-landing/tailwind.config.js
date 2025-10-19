@@ -3,8 +3,8 @@ module.exports = {
 	prefix: 'tw-',
 	important: false,
 	content: [
-		"./index.html",
-		"./index.js",
+        "./**/*.{html,js,jsx,ts,tsx}",
+        "!./node_modules/**",
 	],
 	darkMode: 'class',
 	theme: {

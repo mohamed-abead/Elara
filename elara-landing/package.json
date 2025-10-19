@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "npm-run-all --parallel serve watch",
         "serve": "live-server --port=5173 --open=./index.html",
-        "watch": "tailwindcss -c tailwind.config.js -i ./css/tailwind.css -o ./css/tailwind-runtime.css --watch",
+        "watch": "tailwindcss -c tailwind.config.js -i ./css/tailwind.css -o ./css/tailwind-runtime.css --watch --poll",
         "build": "tailwindcss -c tailwind.config.js -i ./css/tailwind.css -o ./css/tailwind-runtime.css --minify"
     },
     "devDependencies": {
