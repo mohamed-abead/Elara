@@ -4,6 +4,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Header
 
 from clients.crossmint_client import crossmint_client
+from clients.supabase_client import postgrest_as_user
 from core.security import verify_supabase_jwt
 
 
@@ -22,6 +23,24 @@ def current_user(authorization: Annotated[str | None, Header()] = None):
 def create_order(payload: dict, user=Depends(current_user)):
     if not isinstance(payload, dict):
         raise HTTPException(status_code=400, detail="Invalid request body")
+
+    user_id = user["claims"].get("sub")
+    with postgrest_as_user(user["token"]) as pg:
+        resp = pg.get(
+            "/profiles",
+            params={"select": "wallet_address", "id": f"eq.{user_id}"},
+        )
+        resp.raise_for_status()
+        rows = resp.json()
+
+    row = rows[0] if isinstance(rows, list) and rows else {}
+    wallet_address = row.get("wallet_address")
+
+    if not wallet_address:
+        raise HTTPException(status_code=404, detail="No wallet address on file")
+
+    payload["payment"]["payerAddress"] = wallet_address
+    # payload.setdefault("payerAddress", wallet_address)
 
     try:
         print("GOT ROUTED TO BACKEND /orders")
