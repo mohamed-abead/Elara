@@ -1,9 +1,10 @@
 from fastapi import FastAPI
-from routes import profiles
+from routes import profiles, crossmint
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Elara Backend", version="0.0.1")
 app.include_router(profiles.router)
+app.include_router(crossmint.router)
 
 # Dev origins (add/remove as needed)
 ALLOWED_ORIGINS = [

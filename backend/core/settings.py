@@ -13,6 +13,12 @@ class Settings(BaseSettings):
     PRIVY_APP_SECRET: str
     PRIVY_APP_ID: str | None = None  # optional if you don't need it in headers
 
+    # --- Crossmint ---
+    CROSSMINT_API_BASE: str = "https://staging.crossmint.com"
+    CROSSMINT_PROJECT_ID: str | None = None
+    CROSSMINT_SERVER_SIDE: str
+    CROSSMINT_CLIENT_SIDE: str
+
 
     # pydantic-settings v2 config
     model_config = SettingsConfigDict(
