@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Header
 from typing import Annotated
 from clients.privy_client import create_privy_user, extract_primary_wallet, get_wallet_balance
+from clients.crossmint_client import create_crossmint_user
 from clients.supabase_client import postgrest_as_user
 from core.security import verify_supabase_jwt
 
@@ -16,6 +17,9 @@ def current_user(authorization: Annotated[str | None, Header()] = None):
 @router.post("/create_wallet")
 def create_or_get_wallet(user=Depends(current_user)):
     user_id = user["claims"]["sub"]
+    user_email = user["claims"].get("email")
+    if not user_email:
+        raise HTTPException(400, "Missing email for Crossmint wallet creation")
 
     # 1) Check if wallet exists already
     with postgrest_as_user(user["token"]) as pg:
@@ -49,7 +53,9 @@ def create_or_get_wallet(user=Depends(current_user)):
             params={"on_conflict": "id"},
         )
 
-    return {"wallet": wallet, "status": "created"}
+    crossmint_wallet = create_crossmint_user(user_email, user["token"], user_id)
+
+    return {"wallet": wallet, "status": "created", "crossmint": crossmint_wallet}
 
 @router.get("/get_balance")
 def get_balance(user=Depends(current_user)):
